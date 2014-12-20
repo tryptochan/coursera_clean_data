@@ -5,7 +5,7 @@ features <- read.table("UCI HAR Dataset/features.txt",
 train_data <- read.table("UCI HAR Dataset/train/X_train.txt")
 test_data <- read.table("UCI HAR Dataset/test/X_test.txt")
 train_label <- read.table("UCI HAR Dataset/train/y_train.txt")
-test_label <- read.table("UCI HAR Dataset/test/y_train.txt")
+test_label <- read.table("UCI HAR Dataset/test/y_test.txt")
 train_subject <- read.table("UCI HAR Dataset/train/subject_train.txt")
 test_subject <- read.table("UCI HAR Dataset/test/subject_test.txt")
 
@@ -31,6 +31,8 @@ sub_data[, 2] <- sapply(sub_data[, 2], function(x) {
 #  4. Label variable names with feature names
 #  remove parentheses
 var_names <- gsub("()", "", features[extract_idx, 2], fixed=T) 
+#  remove duplicat 'Body' in last several feature names
+var_names <- gsub("BodyBody", "Body", var_names, fixed=T) 
 colnames(sub_data) <- c("Subject", "Activity", var_names)
 
 #  5. Aggregate to produce a second data set of average values for
